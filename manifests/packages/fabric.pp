@@ -1,5 +1,5 @@
 class python::packages::fabric(
-  version => undef
+  $version = undef
 ) {
   include python
   python::pip{'fabric':
