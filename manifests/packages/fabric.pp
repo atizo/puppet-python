@@ -1,6 +1,9 @@
-class python::packages::fabric {
-  include python
+class python::packages::fabric(
+  version => undef,
+) {
+  include pytho
   python::pip{'fabric':
     ensure => installed,
+    version => $version,
   }
 }
