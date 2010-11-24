@@ -12,8 +12,15 @@
 # the Free Software Foundation.
 #
 
-class python {
-  package{'python':
+class python(
+  $python26 = false
+) {
+  package{[ 'python', 'python-devel' ]:
     ensure => present,
+  }
+  if $python26 {
+    package{[ 'python26', 'python26-devel' ]:
+      ensure => present,
+    }
   }
 }
