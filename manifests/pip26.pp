@@ -21,7 +21,7 @@ define python::pip26(
         command => "pip-python26 install $source$pip_version",
         onlyif => "test `$pip freeze | grep '^$name==' | wc -l` -eq 0",
         timeout => "-1",
-        require => Package['python-pip26'],
+        require => Package['python26-pip'],
       }
     }
     absent: {
@@ -29,7 +29,7 @@ define python::pip26(
         command => "pip-python26 uninstall $source$pip_version",
         onlyif => "test `$pip freeze | grep '^$name==' | wc -l` -gt 0",
         timeout => "-1",
-        require => Package['python-pip26'],
+        require => Package['python26-pip'],
       }
     }
   }
