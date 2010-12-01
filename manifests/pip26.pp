@@ -1,10 +1,10 @@
-define python::pip(
+define python::pip26(
   $ensure,
   $path = undef,
   $version = undef
 ) {
   require gcc
-  include python::packages::pip
+  include python::packages26::pip
   if $path {
     $source = $path
   } else {
@@ -17,19 +17,19 @@ define python::pip(
   }
   case $ensure {
     /present|installed/: {
-      exec{"pip-install-$name-$version":
-        command => "pip-python install $source$pip_version",
+      exec{"pip26-install-$name-$version":
+        command => "pip-python26 install $source$pip_version",
         onlyif => "test `$pip freeze | grep '^$name==' | wc -l` -eq 0",
         timeout => "-1",
-        require => Package['python-pip'],
+        require => Package['python-pip26'],
       }
     }
     absent: {
-      exec{"pip-uninstall-$name-$version":
-        command => "pip-python uninstall $source$pip_version",
+      exec{"pip26-uninstall-$name-$version":
+        command => "pip-python26 uninstall $source$pip_version",
         onlyif => "test `$pip freeze | grep '^$name==' | wc -l` -gt 0",
         timeout => "-1",
-        require => Package['python-pip'],
+        require => Package['python-pip26'],
       }
     }
   }
