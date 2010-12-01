@@ -11,14 +11,12 @@ define python::pip26(
     $source = $name
   }
   if $version {
-    $pip_version = "==$version"
-  } else {
-    $pip_version = $source
+    $install_version = "==$version"
   }
   case $ensure {
     /present|installed/: {
       exec{"pip26-install-$name-$version":
-        command => "pip-python26 install $source$pip_version",
+        command => "pip-python26 install $source$install_version",
         onlyif => "test `$pip freeze | grep '^$name==' | wc -l` -eq 0",
         timeout => "-1",
         require => Package['python26-pip'],
@@ -26,7 +24,7 @@ define python::pip26(
     }
     absent: {
       exec{"pip26-uninstall-$name-$version":
-        command => "pip-python26 uninstall $source$pip_version",
+        command => "pip-python26 uninstall $source$install_version",
         onlyif => "test `$pip freeze | grep '^$name==' | wc -l` -gt 0",
         timeout => "-1",
         require => Package['python26-pip'],
