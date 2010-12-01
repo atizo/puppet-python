@@ -12,7 +12,7 @@
 # the Free Software Foundation.
 #
 
-class python::python26
+class python::python26 {
   package{[ 'python26', 'python26-devel' ]:
     ensure => present,
   }
