@@ -1,13 +1,6 @@
 class python::packages::lxml {
   include python
-  package{[ 'libxml2', 'libxml2-devel' ]:
+  package{'python-lxml':
     ensure => installed,
-  }
-  python::pip{'lxml':
-    ensure => installed,
-    require => [
-      Package['libxml2'],
-      Package['libxml2-devel'],
-    ],
   }
 }
