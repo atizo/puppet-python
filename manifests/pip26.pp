@@ -15,17 +15,17 @@ define python::pip26(
   }
   case $ensure {
     /present|installed/: {
-      exec{"pip26-install-$name-$version":
+      exec{"pip26-install-$name$install_version":
         command => "pip-python26 install $source$install_version",
-        onlyif => "test `$pip freeze | grep '^$name==' | wc -l` -eq 0",
+        onlyif => "test `$pip freeze | grep -i '^$name==$version' | wc -l` -eq 0",
         timeout => "-1",
         require => Package['python26-pip'],
       }
     }
     absent: {
-      exec{"pip26-uninstall-$name-$version":
+      exec{"pip26-uninstall-$name$install_version":
         command => "pip-python26 uninstall $source$install_version",
-        onlyif => "test `$pip freeze | grep '^$name==' | wc -l` -gt 0",
+        onlyif => "test `$pip freeze | grep -i '^$name==$version' | wc -l` -gt 0",
         timeout => "-1",
         require => Package['python26-pip'],
       }
