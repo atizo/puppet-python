@@ -17,7 +17,7 @@ define python::pip26(
     /present|installed/: {
       exec{"pip26-install-$name$install_version":
         command => "pip-python26 install $source$install_version",
-        onlyif => "test `$pip freeze | grep -i '^$name==$version' | wc -l` -eq 0",
+        onlyif => "test `pip-python26 freeze | grep -i '^$name==$version' | wc -l` -eq 0",
         timeout => "-1",
         require => Package['python26-pip'],
       }
@@ -25,7 +25,7 @@ define python::pip26(
     absent: {
       exec{"pip26-uninstall-$name$install_version":
         command => "pip-python26 uninstall $source$install_version",
-        onlyif => "test `$pip freeze | grep -i '^$name==$version' | wc -l` -gt 0",
+        onlyif => "test `pip-python26 freeze | grep -i '^$name==$version' | wc -l` -gt 0",
         timeout => "-1",
         require => Package['python26-pip'],
       }
