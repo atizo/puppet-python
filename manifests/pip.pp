@@ -15,17 +15,17 @@ define python::pip(
   }
   case $ensure {
     /present|installed/: {
-      exec{"pip-install-$name-$version":
+      exec{"pip-install-$name$install_version":
         command => "pip-python install $source$install_version",
-        onlyif => "test `pip-python freeze | grep -i '^$name==' | wc -l` -eq 0",
+        onlyif => "test `pip-python freeze | grep -i '^$name==$version' | wc -l` -eq 0",
         timeout => "-1",
         require => Package['python-pip'],
       }
     }
     absent: {
-      exec{"pip-uninstall-$name-$version":
+      exec{"pip-uninstall-$name$install_version":
         command => "pip-python uninstall $source$install_version",
-        onlyif => "test `pip-python freeze | grep -i '^$name==' | wc -l` -gt 0",
+        onlyif => "test `pip-python freeze | grep -i '^$name==$version' | wc -l` -gt 0",
         timeout => "-1",
         require => Package['python-pip'],
       }
