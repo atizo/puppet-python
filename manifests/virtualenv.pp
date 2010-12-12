@@ -1,15 +1,15 @@
 define python::virtualenv(
   $ensure = present,
   $interpreter = 'python',
-  $no-site-packages = false,
+  $no_site_packages = false
 ) {
   python::pip{'virtualenv':
     ensure => installed,
   }
   case $ensure {
     /present|installed/: {
-      if $no-site-packages {
-        $no-site-packages-arg = "--no-site-packages",
+      if $no_site_packages {
+        $no_site_packages_arg = "--no-site-packages"
       }
       exec{"virtualenv-$name":
         command => "virtualenv -p $interpreter $no-site-packages-arg '$name'",
