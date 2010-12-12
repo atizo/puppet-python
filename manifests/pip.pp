@@ -6,9 +6,7 @@ define python::pip(
 ) {
   require gcc
   include python
-  package{'python-pip':
-    ensure => installed,
-  }
+  include python::packages::pip
   if $path {
     $source = $path
   } else {

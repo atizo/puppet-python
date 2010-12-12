@@ -6,9 +6,7 @@ define python::pip26(
 ) {
   require gcc
   include python26
-  package{'python26-pip':
-    ensure => installed,
-  }
+  include python::packages26::pip
   if $path {
     $source = $path
   } else {
