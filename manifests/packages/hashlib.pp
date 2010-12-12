@@ -1,6 +1,14 @@
-class python::packages::hashlib {
+class python::packages::hashlib(
+  virtualenv = undef
+) {
   include python
-  package{'python-hashlib':
-    ensure => installed,
+  if $virtualenv {
+    python::pip{'hashlib':
+      virtualenv => $virtualenv,
+    }
+  } else {
+    package{'python-hashlib':
+      ensure => installed,
+    }
   }
 }

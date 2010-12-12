@@ -1,6 +1,14 @@
-class python::packages::elementtree {
+class python::packages::elementtree(
+  virtualenv = undef
+) {
   include python
-  package{'python-elementtree':
-    ensure => installed,
+  if $virtualenv {
+    python::pip{'elementtree':
+      virtualenv => $virtualenv,
+    }
+  } else {
+    package{'python-elementtree':
+      ensure => installed,
+    }
   }
 }

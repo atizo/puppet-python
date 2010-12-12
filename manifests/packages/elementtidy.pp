@@ -1,4 +1,6 @@
-class python::packages::elementtidy {
+class python::packages::elementtidy(
+  $virtualenv = undef
+) {
   include python
   package{[ 'libtidy', 'libtidy-devel' ]:
     ensure => installed,
@@ -6,6 +8,7 @@ class python::packages::elementtidy {
   python::pip{'elementtidy':
     path => 'http://effbot.org/media/downloads/elementtidy-1.0-20050212.zip',
     ensure => installed,
+    virtualenv => $virtualenv,
     require => [
       Package['libtidy'],
       Package['libtidy-devel'],

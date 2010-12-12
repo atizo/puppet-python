@@ -1,6 +1,14 @@
-class python::packages::feedparser {
+class python::packages::feedparser(
+  virtualenv = undef
+) {
   include python
-  package{'python-feedparser':
-    ensure => installed,
+  if $virtualenv {
+    python::pip{'feedparser':
+      virtualenv => $virtualenv,
+    }
+  } else {
+    package{'python-feedparser':
+      ensure => installed,
+    }
   }
 }

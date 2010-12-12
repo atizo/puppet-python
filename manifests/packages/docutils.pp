@@ -1,6 +1,14 @@
-class python::packages::docutils {
+class python::packages::docutils(
+  $virtualenv = undef
+) {
   include python
-  package{"python-docutils":
-    ensure => installed,
+  if $virtualenv {
+    python::pip{'docutils':
+      virtualenv => $virtualenv,
+    }
+  } else {
+    package{"python-docutils":
+      ensure => installed,
+    }
   }
 }
