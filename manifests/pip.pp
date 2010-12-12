@@ -5,6 +5,7 @@ define python::pip(
   $virtualenv = undef
 ) {
   require gcc
+  include python
   package{'python-pip':
     ensure => installed,
   }

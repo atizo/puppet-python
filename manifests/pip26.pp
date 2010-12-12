@@ -5,6 +5,7 @@ define python::pip26(
   $virtualenv = undef
 ) {
   require gcc
+  include python26
   package{'python26-pip':
     ensure => installed,
   }
