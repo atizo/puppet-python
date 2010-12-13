@@ -12,7 +12,7 @@ define python::virtualenv(
         $no_site_packages_arg = "--no-site-packages"
       }
       exec{"virtualenv-$name":
-        command => "virtualenv -p $interpreter $no-site-packages-arg '$name'",
+        command => "virtualenv -p $interpreter $no_site_packages_arg '$name'",
         onlyif => "test ! -d '$name'",
         require => Python::Pip['virtualenv'],
       }

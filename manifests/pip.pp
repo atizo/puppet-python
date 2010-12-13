@@ -5,8 +5,8 @@ define python::pip(
   $virtualenv = undef
 ) {
   require gcc
-  include python
-  include python::packages::pip
+  require python
+  require python::packages::pip
   if $path {
     $source = $path
   } else {
@@ -16,7 +16,10 @@ define python::pip(
     $install_version = "==$version"
   }
   if $virtualenv {
-    $pip = "$name/bin/pip -E $virtualenv"
+    $pip = "$virtualenv/bin/pip -E $virtualenv"
+    Exec["pip-$virtualenv-install-$name$install_version"]{
+      require => Python::Virtualenv[$virtualenv],
+    }
   } else {
     $pip = 'pip-python26'
   }
@@ -26,7 +29,6 @@ define python::pip(
         command => "$pip install $source$install_version",
         onlyif => "test `$pip freeze | grep -i '^$name==$version' | wc -l` -eq 0",
         timeout => "-1",
-        require => Package['python-pip'],
       }
     }
     absent: {
@@ -34,7 +36,6 @@ define python::pip(
         command => "$pip uninstall $source$install_version",
         onlyif => "test `$pip freeze | grep -i '^$name==$version' | wc -l` -gt 0",
         timeout => "-1",
-        require => Package['python-pip'],
       }
     }
   }
