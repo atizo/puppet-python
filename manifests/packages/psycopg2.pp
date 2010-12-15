@@ -1,14 +1,6 @@
-class python::packages::psycopg2(
-  virtualenv = undef
-) {
+class python::packages::psycopg2 {
   include python
-  if $virtualenv {
-    python::pip{'psycopg2':
-      virtualenv => $virtualenv,
-    }
-  } else {
-    package{'python-psycopg2':
-      ensure => installed,
-    }
+  package{'python-psycopg2':
+    ensure => installed,
   }
 }

@@ -1,14 +1,6 @@
-class python::packages::pil(
-  virtualenv = undef
-) {
+class python::packages::pil {
   include python
-  if $virtualenv {
-    python::pip{'pil':
-      virtualenv => $virtualenv,
-    }
-  } else {
-    package{'python-imaging':
-      ensure => installed,
-    }
+  package{'python-imaging':
+    ensure => installed,
   }
 }

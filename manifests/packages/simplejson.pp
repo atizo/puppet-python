@@ -1,14 +1,6 @@
-class python::packages::simplejson(
-  virtualenv = undef
-) {
+class python::packages::simplejson {
   include python
-  if $virtualenv {
-    python::pip{'simplejson':
-      virtualenv => $virtualenv,
-    }
-  } else {
-    package{'python-simplejson':
-      ensure => installed,
-    }
+  package{'python-simplejson':
+    ensure => installed,
   }
 }

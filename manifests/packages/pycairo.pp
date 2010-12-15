@@ -1,14 +1,6 @@
-class python::packages::pycairo(
-  virtualenv = undef
-) {
+class python::packages::pycairo {
   include python
-  if $virtualenv {
-    python::pip{'pycairo':
-      virtualenv => $virtualenv,
-    }
-  } else {
-    package{'python-pycairo':
-      ensure => installed,
-    }
+  package{'python-pycairo':
+    ensure => installed,
   }
 }

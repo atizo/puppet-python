@@ -1,15 +1,6 @@
-class python::packages::setuptools(
-  virtualenv = undef
-) {
+class python::packages::setuptools {
   include python
-  if $virtualenv {
-    python::pip{'setuptools':
-      virtualenv => $virtualenv,
-    }
-  } else {
-    package{'python-setuptools':
-      ensure => installed,
-    }
+  package{'python-setuptools':
+    ensure => installed,
   }
 }
-

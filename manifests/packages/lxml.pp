@@ -1,14 +1,6 @@
-class python::packages::lxml(
-  virtualenv = undef
-) {
+class python::packages::lxml {
   include python
-  if $virtualenv {
-    python::pip{'lxml':
-      virtualenv => $virtualenv,
-    }
-  } else {
-    package{'python-lxml':
-      ensure => installed,
-    }
+  package{'python-lxml':
+    ensure => installed,
   }
 }
