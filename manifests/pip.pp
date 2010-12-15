@@ -2,7 +2,7 @@ define python::pip(
   $ensure,
   $path = undef,
   $version = undef,
-  $virtualenv = undef
+  $packages = undef,
 ) {
   require gcc
   require python
@@ -14,14 +14,6 @@ define python::pip(
   }
   if $version {
     $install_version = "==$version"
-  }
-  if $virtualenv {
-    $pip = "$virtualenv/bin/pip -E $virtualenv"
-    Exec["pip-$virtualenv-install-$name$install_version"]{
-      require => Python::Virtualenv[$virtualenv],
-    }
-  } else {
-    $pip = 'pip-python26'
   }
   case $ensure {
     /present|installed/: {
