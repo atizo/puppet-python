@@ -2,17 +2,38 @@ define python::virtualenv(
   $ensure = present,
   $interpreter = 'python',
   $no_site_packages = undef,
+  $owner = root,
+  $group = root,
+  $mode = 750
 ) {
-  require python::packges::virtualenv
+  require python::packages::virtualenv
   case $ensure {
     /present|installed/: {
       if $no_site_packages {
         $no_site_packages_arg = "--no-site-packages"
       }
+      file{$name:
+        ensure => directory,
+        owner => $owner, group => $group, mode => $mode;
+      }
+      file{"$name/lib/pkgconfig":
+        ensure => directory,
+        owner => $owner, group => $group, mode => $mode;
+      }
       exec{"virtualenv-$name":
-        command => "virtualenv -p $interpreter $no_site_packages_arg '$name'",
-        onlyif => "test ! -d '$name'",
-        require => Python::Pip['virtualenv'],
+        command => "virtualenv -p $interpreter $no_site_packages_arg $name",
+        user => $owner,
+        group => $group,
+        onlyif => "test ! -f $name/bin/activate",
+        require => File[$name],
+        before => File["$name/lib/pkgconfig"],
+        notify => Exec["virtualenv-$name-update-pip"],
+      }
+      exec{"virtualenv-$name-update-pip":
+        command => "$name/bin/pip -E $name install -U pip",
+        user => $owner,
+        group => $group,
+        refreshonly => true,
       }
     }
     absent: {
