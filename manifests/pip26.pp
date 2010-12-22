@@ -1,7 +1,7 @@
 define python::pip26(
   $ensure,
   $path = undef,
-  $version = undef,
+  $version = undef
 ) {
   require gcc
   require python26

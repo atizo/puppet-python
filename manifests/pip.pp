@@ -2,7 +2,7 @@ define python::pip(
   $ensure,
   $path = undef,
   $version = undef,
-  $packages = undef,
+  $packages = undef
 ) {
   require gcc
   require python
