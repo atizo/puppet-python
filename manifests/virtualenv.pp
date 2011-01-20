@@ -9,6 +9,14 @@ define python::virtualenv(
   require python::packages::virtualenv
   case $ensure {
     /present|installed/: {
+      case $interpreter {
+        'python': {
+          require python
+        }
+        'python26': {
+          require python::python26
+        }
+      }
       if $no_site_packages {
         $no_site_packages_arg = "--no-site-packages"
       }
