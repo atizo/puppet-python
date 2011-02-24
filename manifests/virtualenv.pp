@@ -6,6 +6,7 @@ define python::virtualenv(
   $group = root,
   $mode = 750
 ) {
+  require gcc
   require python::packages::virtualenv
   case $ensure {
     /present|installed/: {
