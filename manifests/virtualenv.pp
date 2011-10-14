@@ -29,7 +29,7 @@ define python::virtualenv(
         ensure => directory,
         owner => $owner, group => $group, mode => $mode;
       }
-      exec{"virtualenv-$name":
+      exec{"virtualenv-${name}":
         command => "virtualenv -p $interpreter $no_site_packages_arg $name",
         user => $owner,
         group => $group,
@@ -38,7 +38,7 @@ define python::virtualenv(
         before => File["$name/lib/pkgconfig"],
         notify => Exec["virtualenv-$name-update-pip"],
       }
-      exec{"virtualenv-$name-update-pip":
+      exec{"virtualenv-${name}-update-pip":
         command => "$name/bin/pip -E $name install -U pip",
         user => $owner,
         group => $group,
