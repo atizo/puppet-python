@@ -37,6 +37,7 @@ define python::virtualenv(
         require => File[$name],
         before => File["$name/lib/pkgconfig"],
         notify => Exec["virtualenv-${name}-update-pip"],
+        logoutput => "on_failure",
       }
       exec{"virtualenv-${name}-update-pip":
         command => "$name/bin/pip -E $name install -U pip",
