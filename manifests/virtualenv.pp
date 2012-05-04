@@ -30,9 +30,7 @@ define python::virtualenv(
         owner => $owner, group => $group, mode => $mode;
       }
       exec{"virtualenv-${name}":
-        command => "virtualenv -p $interpreter $no_site_packages_arg $name",
-        user => $owner,
-        group => $group,
+        command => "su - $owner -c 'virtualenv -p $interpreter $no_site_packages_arg $name'",
         onlyif => "test ! -f $name/bin/activate",
         require => File[$name],
         before => File["$name/lib/pkgconfig"],
