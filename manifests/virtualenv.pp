@@ -25,6 +25,11 @@ define python::virtualenv(
         ensure => directory,
         owner => $owner, group => $group, mode => $mode;
       }
+      file{"$name/src":
+        ensure => directory,
+        require => Exec["virtualenv-${name}"],
+        owner => $owner, group => $group, mode => $mode;
+      }
       file{"$name/lib/pkgconfig":
         ensure => directory,
         owner => $owner, group => $group, mode => $mode;
